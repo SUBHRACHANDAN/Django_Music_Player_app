@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music List</title>
+    <link rel="stylesheet" href="{% static 'player/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Music Player</h1>
+        <nav>
+            <a href="{% url 'upload_music' %}">Upload Music</a>
+        </nav>
+    </header>
+    <main>
+        <section class="music-list">
+            {% for music in music_files %}
+                <div class="music-item">
+                    {% if music.album_cover %}
+                        <img src="{{ music.album_cover.url }}" alt="{{ music.title }}" class="album-cover">
+                    {% endif %}
+                    <div class="music-info">
+                        <h2>{{ music.title }}</h2>
+                        <p>by {{ music.artist }}</p>
+                        <audio controls>
+                            <source src="{{ music.file.url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Music Player</p>
+    </footer>
+</body>
+</html>
